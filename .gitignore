@@ -1,0 +1,11 @@
+*.pytest_cache/
+.DS_Store
+.vscode/
+example/
+*__pycache__/
+SE3Transformer/
+pdb100_2021Mar03/
+*.tgz
+*.pt
+network/weights/
+*.out
