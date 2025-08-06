@@ -146,6 +146,21 @@ def parse_mixed_fasta(filename,  maxseq=10000):
         msa_i = msa_i.replace('B','D') # hacky...
 
         msas_i = msa_i.split('/')
+        print(msas_i)
+
+        if len(msa1) == 0:
+            # first sequence line, just initialize msa1 and msa2
+            if len(msas_i) == 2:
+                msa1.append(msas_i[0])
+                msa2.append(msas_i[1])
+            elif len(msas_i) == 1:
+                # If only one sequence string, decide how to split it.
+                # Here, just treat whole string as msa1, msa2 empty
+                msa1.append(msas_i[0])
+                msa2.append('')  # empty placeholder
+            else:
+                raise ValueError("Unexpected number of split parts in first sequence line")
+            continue  # move to next line
 
         if (len(msas_i)==1):
             msas_i = [msas_i[0][:len(msa1[0])], msas_i[0][len(msa1[0]):]]

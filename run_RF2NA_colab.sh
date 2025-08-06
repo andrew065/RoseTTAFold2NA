@@ -125,3 +125,15 @@ python $PIPEDIR/network/predict.py \
     -db $HHDB #2> $WDIR/log/network.stderr #1> $WDIR/log/network.stdout 
 
 echo "Done" 
+
+python /network/predict.py \
+    -inputs $argstring \
+    -prefix $WDIR/models/model \
+    -model $PIPEDIR/network/weights/RF2NA_apr23.pt \
+    -db $HHDB #2> $WDIR/log/network.stderr #1> $WDIR/log/network.stdout 
+
+
+/hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA/input_prep/merge_msa_prot_dna.py 
+/hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA/experiments/test_docking_20619769/CXCL9.msa0.a3m 
+/hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA/experiments/test_docking_20619769/CXCL9_aptaprimer_98nt.fa 
+/hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA/experiments/test_docking_20619769/CXCL9.CXCL9_aptaprimer_98nt.a3m

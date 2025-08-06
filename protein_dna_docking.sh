@@ -8,11 +8,11 @@
 # =============================================================================
 
 # Get the root directory of this project (assumes this script is in the root or a subdir)
-PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(pwd)"
 
 # Input files (use absolute paths)
-PROTEIN_FASTA="$PROJECT_ROOT/example/dna_binding_protein.fa"  # Protein FASTA file
-DNA_FASTA="$PROJECT_ROOT/example/RNA.fa"          # DNA FASTA file
+PROTEIN_FASTA="$PROJECT_ROOT/data/CXCL9.fa"  # Protein FASTA file
+DNA_FASTA="$PROJECT_ROOT/data/CXCL9_aptaprimer_98nt.fa"          # DNA FASTA file
 
 
 # Set the experiment name to the first command-line argument, or use "test" as default if not provided
@@ -22,13 +22,13 @@ EXPERIMENT_NAME=${1:-"test"}
 
 #SBATCH --job-name=rf2na_docking
 #SBATCH --output=slurm_%j.out
-#SBATCH --error=slurm_%j.err
 #SBATCH --time=24:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8
+#SBATCH --cpus-per-task=4
 #SBATCH --mem=64G
-#SBATCH --partition=compute
+#SBATCH --gres=gpu:1
+#SBATCH --reservation=mkoziarski_gpu
 
 # =============================================================================
 # SCRIPT LOGIC (DO NOT MODIFY BELOW THIS LINE)
@@ -40,6 +40,8 @@ SLURM_JOB_ID=${SLURM_JOB_ID:-$(date +%s)}
 # Create unique experiment directory
 EXPERIMENT_DIR="experiments/${EXPERIMENT_NAME}_${SLURM_JOB_ID}"
 mkdir -p $EXPERIMENT_DIR
+
+mv slurm_%j.out $EXPERIMENT_DIR/slurm_%j.out
 
 echo "============================================="
 echo "RoseTTAFold2NA Protein-DNA Docking Experiment"
