@@ -97,6 +97,7 @@ do
         cp $fasta $WDIR/$tag.fa
         argstring+="S:$WDIR/$tag.fa "
         nD=$((nD+1))
+        lastD="$tag"
     fi
 done
 
@@ -107,7 +108,7 @@ if [ $nP -eq 1 ] && [ $nD -eq 1 ]
 then
     echo "Creating joint Protein-DNA MSA"
     echo " -> Running command: $PIPEDIR/input_prep/merge_msa_prot_dna.py $WDIR/$lastP.msa0.a3m $WDIR/$lastD.fa $WDIR/$lastP.$lastD.a3m"
-    $PIPEDIR/input_prep/merge_msa_prot_dna.py $WDIR/$lastP.msa0.a3m $WDIR/$lastD.fa $WDIR/$lastP.$lastD.a3m > $WDIR/log/make_pMSA.$tag.stdout 2> $WDIR/log/make_pMSA.$tag.stderr
+    $PIPEDIR/input_prep/merge_msa_prot_dna.py $WDIR/$lastP.msa0.a3m $WDIR/$lastD.fa $WDIR/$lastP.$lastD.a3m > $WDIR/log/make_pMSA.$lastD.stdout 2> $WDIR/log/make_pMSA.$lastD.stderr
     argstring="PD:$WDIR/$lastP.$lastD.a3m:$WDIR/$lastP.hhr:$WDIR/$lastP.atab"
 fi
 
@@ -124,16 +125,4 @@ python $PIPEDIR/network/predict.py \
     -model $PIPEDIR/network/weights/RF2NA_apr23.pt \
     -db $HHDB #2> $WDIR/log/network.stderr #1> $WDIR/log/network.stdout 
 
-echo "Done" 
-
-python /network/predict.py \
-    -inputs $argstring \
-    -prefix $WDIR/models/model \
-    -model $PIPEDIR/network/weights/RF2NA_apr23.pt \
-    -db $HHDB #2> $WDIR/log/network.stderr #1> $WDIR/log/network.stdout 
-
-
-/hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA/input_prep/merge_msa_prot_dna.py 
-/hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA/experiments/test_docking_20619769/CXCL9.msa0.a3m 
-/hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA/experiments/test_docking_20619769/CXCL9_aptaprimer_98nt.fa 
-/hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA/experiments/test_docking_20619769/CXCL9.CXCL9_aptaprimer_98nt.a3m
+echo "Done"

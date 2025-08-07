@@ -7,11 +7,11 @@
 # CUSTOMIZE THESE VARIABLES FOR YOUR EXPERIMENT
 # =============================================================================
 
-# Get the root directory of this project (assumes this script is in the root or a subdir)
-PROJECT_ROOT="$(pwd)"
+# Get the parent directory of the current working directory
+PROJECT_ROOT="$(dirname "$(pwd)")"
 
 # Input files (use absolute paths)
-PROTEIN_FASTA="$PROJECT_ROOT/data/CXCL9.fa"  # Protein FASTA file
+PROTEIN_FASTA="$PROJECT_ROOT/data/CXCL9.fa"                      # Protein FASTA file
 DNA_FASTA="$PROJECT_ROOT/data/CXCL9_aptaprimer_98nt.fa"          # DNA FASTA file
 
 
@@ -75,10 +75,14 @@ cd $EXPERIMENT_DIR
 
 # Run RoseTTAFold2NA with ColabFold
 echo "Starting RoseTTAFold2NA with ColabFold MSA generation..."
-echo "Command: $SCRIPT_DIR/run_RF2NA_colab.sh . P:$PROTEIN_FASTA D:$DNA_FASTA"
+echo "Command: $PROJECT_ROOT/scripts/run_RF2NA_colab.sh . P:$PROTEIN_FASTA D:$DNA_FASTA"
 echo ''
 
-$PROJECT_ROOT/run_RF2NA_colab.sh . P:$PROTEIN_FASTA D:$DNA_FASTA
+# Run docking with single stranded DNA
+$PROJECT_ROOT/scripts/run_RF2NA_colab.sh . P:$PROTEIN_FASTA S:$DNA_FASTA
+
+# Run docking with double stranded DNA (complentary sequence will be auto generated)
+$PROJECT_ROOT/scripts/run_RF2NA_colab.sh . P:$PROTEIN_FASTA D:$DNA_FASTA
 
 echo ''
 echo "============================================="

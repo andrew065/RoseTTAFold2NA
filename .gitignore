@@ -9,3 +9,4 @@ pdb100_2021Mar03/
 *.pt
 network/weights/
 *.out
+.idea/
