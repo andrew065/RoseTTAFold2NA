@@ -1,5 +1,7 @@
 # RF2NA
-GitHub repo for RoseTTAFold2 with nucleic acids
+RoseTTAFold2NA predicts 3D structures of protein-nucleic acid complexes using deep learning. 
+
+This repository extends RoseTTAFold2 to handle protein MSA generation using ColabFold for simplified setup without large database downloads. This is primarily intended for protein-DNA complex predictions.
 
 **New: April 13, 2023 v0.2**
 * Updated weights (https://files.ipd.uw.edu/dimaio/RF2NA_apr23.tgz) for better prediction of homodimer:DNA interactions and better DNA-specific sequence recognition
@@ -39,6 +41,9 @@ cd ..
 ```
 
 4. Download sequence and structure databases
+
+Note: This repository uses ColabFold for protein MSA generation via online databases. Local MSA database downloads (UniRef30 + BFD ~318GB) are not required. Only structure templates are needed.
+
 ```
 # uniref30 [46G]
 wget http://wwwuser.gwdg.de/~compbiol/uniclust/2020_06/UniRef30_2020_06_hhsuite.tar.gz
@@ -53,6 +58,10 @@ tar xfz bfd_metaclust_clu_complete_id30_c90_final_seq.sorted_opt.tar.gz -C ./bfd
 # structure templates (including *_a3m.ffdata, *_a3m.ffindex)
 wget https://files.ipd.uw.edu/pub/RoseTTAFold/pdb100_2021Mar03.tar.gz
 tar xfz pdb100_2021Mar03.tar.gz
+
+## ColabFold Integration
+
+ColabFold integration eliminates large database downloads by accessing UniRef30/BFD online. See `README_colabfold.md` for details.
 
 # RNA databases
 mkdir -p RNA
@@ -77,23 +86,41 @@ cd ..
 ```
 
 ## Usage
+
+For running on SLURM clusters, use the provided job submission script:
+```bash
+# Submit protein-DNA docking job
+sbatch scripts/protein_dna_docking.sh [experiment_name]
+
+# Example:
+sbatch scripts/protein_dna_docking.sh CXCL9_aptamer
 ```
-conda activate RF2NA
-cd example
-# run Protein/RNA prediction
-../run_RF2NA.sh rna_pred rna_binding_protein.fa R:RNA.fa
-# run Protein/DNA prediction
-../run_RF2NA.sh dna_pred dna_binding_protein.fa D:DNA.fa
-```
+
+The SLURM script automatically handles:
+- Environment activation
+- GPU allocation
+- Experiment directory creation
+- Result organization
 ### Inputs
 * The first argument to the script is the output folder
 * The remaining arguments are fasta files for individual chains in the structure.  Use the tags `P:xxx.fa` `R:xxx.fa` `D:xxx.fa` `S:xxx.fa` to specify protein, RNA, double-stranded DNA, and single-stranded DNA, respectively.  Use the tag `PR:xxx.fa` to specify paired protein/RNA.    Each chain is a separate file; 'D' will automatically generate a complementary DNA strand to the input strand.  
 
 ### Expected outputs
-* Outputs are written to the folder provided as the first argument (`dna_pred` and `rna_pred`).
-* Model outputs are placed in a subfolder, `models` (e.g., `dna_pred.models`)
-* You will get a predicted structre with estimated per-residue LDDT in the B-factor column (`models/model_00.pdb`)
-* You will get a numpy `.npz` file (`models/model_00.npz`).  This can be read with `numpy.load` and contains three tables (L=complex length):
+
+**Output Organization:**
+* Outputs are organized in experiment directories: `experiments/{experiment_name}_{job_id}/`
+* Each experiment contains:
+  - `slurm_{job_id}.out` - Job log file
+  - `models/` - Prediction results subfolder
+  - MSA and intermediate files
+
+**Output Files:**
+* `models/model_00.pdb` - Predicted structure with per-residue LDDT in B-factor column
+* `models/model_00.npz` - Numpy file containing three tables (L=complex length):
    - dist (L x L x 37) - the predicted distogram
    - lddt (L) - the per-residue predicted lddt
    - pae (L x L) - the per-residue pair predicted error
+
+## Results Analysis
+
+For analyzing the prediction results, see `notebooks/rf2na_results_analysis.ipynb` which provides tools to visualize and interpret the distogram, LDDT scores, and PAE matrices from the numpy output files.

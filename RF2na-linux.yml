@@ -22,3 +22,16 @@ dependencies:
   - pip:
     - psutil
     - tqdm
+    - colabfold==1.5.5
+    - alphafold==2.0.0
+    - dm-haiku
+    - jax
+    - jaxlib
+    - absl-py
+    - appdirs
+    - py3Dmol
+    - biopython>=1.80
+    - tensorflow-cpu
+    - matplotlib
+    - pandas
+    - importlib-metadata
