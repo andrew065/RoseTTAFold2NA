@@ -42,7 +42,7 @@ cd ..
 
 4. Download sequence and structure databases
 
-Note: This repository uses ColabFold for protein MSA generation via online databases. Local MSA database downloads (UniRef30 + BFD ~318GB) are not required. Only structure templates are needed.
+   Note: This repository uses ColabFold for protein MSA generation via online databases. Local MSA database downloads (UniRef30 + BFD ~318GB) are not required. Only structure templates are needed.
 
 ```
 # uniref30 [46G]
