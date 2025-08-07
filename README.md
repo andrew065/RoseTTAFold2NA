@@ -59,9 +59,6 @@ tar xfz bfd_metaclust_clu_complete_id30_c90_final_seq.sorted_opt.tar.gz -C ./bfd
 wget https://files.ipd.uw.edu/pub/RoseTTAFold/pdb100_2021Mar03.tar.gz
 tar xfz pdb100_2021Mar03.tar.gz
 
-## ColabFold Integration
-
-ColabFold integration eliminates large database downloads by accessing UniRef30/BFD online. See `README_colabfold.md` for details.
 
 # RNA databases
 mkdir -p RNA
