@@ -3,8 +3,8 @@ Match_columns 125
 No_of_seqs    1 out of 1
 Neff          1
 Searched_HMMs 153500
-Date          Wed Aug  6 17:23:30 2025
-Command       hhsearch -b 50 -B 500 -z 50 -Z 500 -mact 0.05 -cpu 8 -maxmem 64 -aliw 100000 -e 100 -p 5.0 -d /hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA/pdb100_2021Mar03/pdb100_2021Mar03 -i /hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA/experiments/test_docking_20619769/CXCL9.msa0.a3m -o /hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA/experiments/test_docking_20619769/CXCL9.hhr -atab /hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA/experiments/test_docking_20619769/CXCL9.atab -v 0 
+Date          Thu Aug  7 11:12:27 2025
+Command       hhsearch -b 50 -B 500 -z 50 -Z 500 -mact 0.05 -cpu 8 -maxmem 64 -aliw 100000 -e 100 -p 5.0 -d /hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA/pdb100_2021Mar03/pdb100_2021Mar03 -i /hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA/experiments/test_docking_20628006/CXCL9.msa0.a3m -o /hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA/experiments/test_docking_20628006/CXCL9.hhr -atab /hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA/experiments/test_docking_20628006/CXCL9.atab -v 0 
 
  No Hit                             Prob E-value P-value  Score    SS Cols Query HMM  Template HMM
   1 1f9p_A                          99.0 4.8E-13 3.1E-18   89.4   0.0   81   12-93      1-81  (81)

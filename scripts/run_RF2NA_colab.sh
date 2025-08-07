@@ -13,7 +13,7 @@ unset __conda_setup
 ############################################################
 
 SCRIPT=`realpath -s $0`
-export PIPEDIR=`dirname $SCRIPT`
+export PIPEDIR=$(dirname "$(dirname "$SCRIPT")")
 HHDB="$PIPEDIR/pdb100_2021Mar03/pdb100_2021Mar03"
 
 CPU="8"  # number of CPUs to use
@@ -101,16 +101,7 @@ do
     fi
 done
 
-############################################################
-# Merge MSAs for Protein-DNA
-############################################################
-if [ $nP -eq 1 ] && [ $nD -eq 1 ]
-then
-    echo "Creating joint Protein-DNA MSA"
-    echo " -> Running command: $PIPEDIR/input_prep/merge_msa_prot_dna.py $WDIR/$lastP.msa0.a3m $WDIR/$lastD.fa $WDIR/$lastP.$lastD.a3m"
-    $PIPEDIR/input_prep/merge_msa_prot_dna.py $WDIR/$lastP.msa0.a3m $WDIR/$lastD.fa $WDIR/$lastP.$lastD.a3m > $WDIR/log/make_pMSA.$lastD.stdout 2> $WDIR/log/make_pMSA.$lastD.stderr
-    argstring="PD:$WDIR/$lastP.$lastD.a3m:$WDIR/$lastP.hhr:$WDIR/$lastP.atab"
-fi
+echo -e "\nPrediction argstring input: $argstring\n"
 
 ############################################################
 # end-to-end prediction

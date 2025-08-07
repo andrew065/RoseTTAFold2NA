@@ -1,5 +1,18 @@
 #!/bin/bash
 
+#SBATCH -N 1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=80G
+#SBATCH --gres=gpu:1
+#SBATCH --time=24:00:00
+#SBATCH --reservation=mkoziarski_gpu
+#SBATCH --job-name=rf2na_docking
+#SBATCH --output=slurm_%j.out
+
+source $HOME/.bashrc
+conda activate RF2NA
+
+
 # SLURM job submission script for RoseTTAFold2NA protein-DNA docking experiments
 # Usage: sbatch submit_protein_dna_docking.sh [experiment_name]
 
@@ -7,8 +20,8 @@
 # CUSTOMIZE THESE VARIABLES FOR YOUR EXPERIMENT
 # =============================================================================
 
-# Get the parent directory of the current working directory
-PROJECT_ROOT="$(dirname "$(pwd)")"
+# Set project root directory (absolute path)
+PROJECT_ROOT="/hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA"
 
 # Input files (use absolute paths)
 PROTEIN_FASTA="$PROJECT_ROOT/data/CXCL9.fa"                      # Protein FASTA file
@@ -17,18 +30,6 @@ DNA_FASTA="$PROJECT_ROOT/data/CXCL9_aptaprimer_98nt.fa"          # DNA FASTA fil
 
 # Set the experiment name to the first command-line argument, or use "test" as default if not provided
 EXPERIMENT_NAME=${1:-"test"}
-
-# ---------- SLURM job parameters -----------
-
-#SBATCH --job-name=rf2na_docking
-#SBATCH --output=slurm_%j.out
-#SBATCH --time=24:00:00
-#SBATCH --nodes=1
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=64G
-#SBATCH --gres=gpu:1
-#SBATCH --reservation=mkoziarski_gpu
 
 # =============================================================================
 # SCRIPT LOGIC (DO NOT MODIFY BELOW THIS LINE)
@@ -41,7 +42,7 @@ SLURM_JOB_ID=${SLURM_JOB_ID:-$(date +%s)}
 EXPERIMENT_DIR="experiments/${EXPERIMENT_NAME}_${SLURM_JOB_ID}"
 mkdir -p $EXPERIMENT_DIR
 
-mv slurm_%j.out $EXPERIMENT_DIR/slurm_%j.out
+mv "slurm_${SLURM_JOB_ID}.out" "$EXPERIMENT_DIR/"
 
 echo "============================================="
 echo "RoseTTAFold2NA Protein-DNA Docking Experiment"
@@ -78,11 +79,11 @@ echo "Starting RoseTTAFold2NA with ColabFold MSA generation..."
 echo "Command: $PROJECT_ROOT/scripts/run_RF2NA_colab.sh . P:$PROTEIN_FASTA D:$DNA_FASTA"
 echo ''
 
-# Run docking with single stranded DNA
+# Run docking with single stranded DNA using `S` tag
 $PROJECT_ROOT/scripts/run_RF2NA_colab.sh . P:$PROTEIN_FASTA S:$DNA_FASTA
 
-# Run docking with double stranded DNA (complentary sequence will be auto generated)
-$PROJECT_ROOT/scripts/run_RF2NA_colab.sh . P:$PROTEIN_FASTA D:$DNA_FASTA
+# Run docking with double stranded DNA using `D` tag (complentary sequence will be auto generated)
+# $PROJECT_ROOT/scripts/run_RF2NA_colab.sh . P:$PROTEIN_FASTA D:$DNA_FASTA
 
 echo ''
 echo "============================================="

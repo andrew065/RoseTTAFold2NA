@@ -95,7 +95,6 @@ def main():
     
     # Create output directory
     os.makedirs(args.out_dir, exist_ok=True)
-    os.makedirs(os.path.join(args.out_dir, "colabfold"), exist_ok=True)
     
     # Read input sequence
     sequence = ""
