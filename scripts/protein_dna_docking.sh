@@ -25,7 +25,7 @@ PROJECT_ROOT="/hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA"
 
 # Input files (use absolute paths)
 PROTEIN_FASTA="$PROJECT_ROOT/data/CXCL9.fa"                      # Protein FASTA file
-DNA_FASTA="$PROJECT_ROOT/data/CXCL9_aptaprimer_98nt.fa"          # DNA FASTA file
+DNA_FASTA="$PROJECT_ROOT/data/CXCL9_aptaprimer_104.fa"           # DNA FASTA file
 
 
 # Set the experiment name to the first command-line argument, or use "test" as default if not provided

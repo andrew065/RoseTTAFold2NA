@@ -1,0 +1,4 @@
+2025-09-20 15:05:56,740 - INFO - Processing sequence: CXCL9 (length: 125)
+2025-09-20 15:05:56,741 - INFO - Running ColabFold MSA for CXCL9
+2025-09-20 15:05:56,744 - INFO - Created placeholder A3M file: /hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA/experiments/110nt_21125702/CXCL9.msa0.a3m
+2025-09-20 15:05:56,744 - INFO - MSA generation completed: /hpf/projects/mkoziarski/alian/igem/RoseTTAFold2NA/experiments/110nt_21125702/CXCL9.msa0.a3m
