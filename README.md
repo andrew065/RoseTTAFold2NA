@@ -1,12 +1,8 @@
 # RF2NA
 RoseTTAFold2NA predicts 3D structures of protein-nucleic acid complexes using deep learning. 
 
-This repository extends RoseTTAFold2 to handle protein MSA generation using ColabFold for simplified setup without large database downloads. This is primarily intended for protein-DNA complex predictions.
-
-**New: April 13, 2023 v0.2**
-* Updated weights (https://files.ipd.uw.edu/dimaio/RF2NA_apr23.tgz) for better prediction of homodimer:DNA interactions and better DNA-specific sequence recognition
-* Bugfixes in MSA generation pipeline
-* Support for paired protein/RNA MSAs
+> [!NOTE] 
+> This repository extends RoseTTAFold2NA (https://github.com/uw-ipd/RoseTTAFold2NA) to handle protein MSA generation using ColabFold for simplified setup without large database downloads. This is primarily intended for protein-DNA complex predictions.
 
 ## Installation
 
